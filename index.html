@@ -1,0 +1,217 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Nupur Gaba, Manager in Founder's Office at Careerwill, showcasing expertise in edtech, partnerships, and program management.">
+    <title>Nupur Gaba | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #1E3A8A;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            margin: 0;
+        }
+        header p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        nav {
+            background-color: #FFFF00;
+            text-align: center;
+            padding: 10px 0;
+        }
+        nav a {
+            color: #1E3A8A;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        section {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        section h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: #1E3A8A;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .experience-card, .education-card, .skills-list {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .skills-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .skills-list li {
+            display: inline-block;
+            background-color: #1E3A8A;
+            color: white;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #1E3A8A;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer a {
+            color: #FFFF00;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 28px;
+            }
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nupur Gaba</h1>
+        <p>Manager, Founder's Office at Careerwill | Edtech & Program Management Expert</p>
+    </header>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I’m Nupur Gaba, a dynamic professional with over 6.5 years of experience in academic engagement, program management, and advocacy within the education and social impact sectors. At Careerwill, I manage strategic initiatives in the Founder's Office, driving partnerships, operational efficiency, and innovative projects. I’m passionate about leveraging education to inspire social transformation and create a more equitable world.</p>
+    </section>
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="experience-card">
+            <h3>Manager, Founder's Office, Careerwill Information Center Pvt Ltd</h3>
+            <p><strong>April 2021 – Present | Delhi, India</strong></p>
+            <p>Collaborate with the founder to define and implement strategic plans, conduct market and competitive analysis, and ensure cross-functional alignment. Oversee key projects, track performance via KPIs, and optimize workflows for operational efficiency. Build relationships with stakeholders, manage crises, and drive innovation through special initiatives.</p>
+        </div>
+        <div class="experience-card">
+            <h3>Assistant Manager Academics, U-Dictionary, Netease Youdao Hongkong (Beijing) Co. Ltd.</h3>
+            <p><strong>Dates Not Specified | Location Not Specified</strong></p>
+            <p>Developed partnerships with academic institutions like Kings College, UK, for joint research and training. Managed research collaborations, produced thought leadership content, and provided logistical support for academic activities, enhancing organizational impact.</p>
+        </div>
+        <div class="experience-card">
+            <h3>Marketing Intern, FIITJEE</h3>
+            <p><strong>May 2016 – July 2016 | Delhi, India</strong></p>
+            <p>Supported marketing initiatives, contributing to campaigns that increased student engagement and brand visibility for FIITJEE’s educational programs.</p>
+        </div>
+    </section>
+    <section id="education">
+        <h2>Education</h2>
+        <div class="education-card">
+            <h3>Master’s in Public Administration, IGNOU</h3>
+            <p><strong>January 2020 – December 2021</strong></p>
+            <p>Relevant Coursework: Policy Analysis, Organizational Leadership, Public Finance, Non-Profit Management, Research Methods, Ethics in Public Administration.</p>
+        </div>
+        <div class="education-card">
+            <h3>Bachelor in Commerce, University of Delhi</h3>
+            <p><strong>June 2015 – May 2018 | Delhi, India</strong></p>
+        </div>
+    </section>
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-list">
+            <ul>
+                <li>Fundraising</li>
+                <li>Investments</li>
+                <li>Stakeholder Management</li>
+                <li>Project Management</li>
+                <li>Startup Building</li>
+            </ul>
+        </div>
+        <h2>Languages</h2>
+        <div class="skills-list">
+            <ul>
+                <li>Hindi</li>
+                <li>English</li>
+            </ul>
+        </div>
+    </section>
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Let’s connect to explore collaboration opportunities!</p>
+        <p>Email: nupur.gaba97@gmail.com</p>
+        <p>Phone: 9811094896</p>
+        <p>Location: Delhi, India</p>
+    </section>
+    <footer>
+        <p>© 2025 Nupur Gaba | Built with GitHub Pages</p>
+        <p><a href="#contact">Get in Touch</a></p>
+    </footer>
+</body>
+</html>
