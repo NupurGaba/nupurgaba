@@ -127,13 +127,26 @@
         footer a:hover {
             text-decoration: underline;
         }
-        @media (max-width: 600px) {
+        /* Added CSS for the image */
+        .profile-photo {
+            display: block;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            border: 3px solid #1E3A8A;
+        }
+       @media (max-width: 600px) {
             header h1 {
                 font-size: 28px;
             }
             section {
                 padding: 20px;
             }
+            .profile-photo {
+                width: 120px;
+                height: 120px;
         }
     </style>
 </head>
@@ -151,6 +164,7 @@
     </nav>
     <section id="about">
         <h2>About Me</h2>
+        <img src="nupur-photo.jpg" alt="Nupur Gaba Profile Photo" class="profile-photo">
         <p>I’m Nupur Gaba, a dynamic professional with over 6.5 years of experience in talent acquisition, investment management, and partnerships within the education and IT sectors. At Careerwill, I manage strategic initiatives in the Founder's Office, driving partnerships, operational efficiency, and building great teams. I’m passionate about leveraging education to inspire social transformation and create a more equitable world.</p>
     </section>
     <section id="experience">
